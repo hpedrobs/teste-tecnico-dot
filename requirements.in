@@ -1,0 +1,11 @@
+# Python 3.12. Gere o lock com o comando descrito no README.
+Django>=5.2,<5.3
+djangorestframework>=3.16,<3.17
+langchain-core>=1.0,<2
+langchain-openai>=1.0,<2
+python-dotenv>=1.1,<2
+sentence-transformers>=5.1,<6
+transformers>=4.45,<5
+torch>=2.6,<2.11
+faiss-cpu>=1.12,<2
+numpy>=2.1,<3

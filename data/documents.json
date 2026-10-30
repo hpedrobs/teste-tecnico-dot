@@ -1,0 +1,34 @@
+[
+  {
+    "id": "listas",
+    "text": "Listas em Python guardam vários elementos em uma sequência ordenada e mutável. Crie uma lista com frutas = ['maçã', 'banana']. Use frutas.append('uva') para adicionar um item ao final e frutas[0] para acessar o primeiro. Uma lista permite valores repetidos e pode crescer durante o programa."
+  },
+  {
+    "id": "dicionarios",
+    "text": "Dicionários em Python associam chaves a valores. Para guardar a idade de cada pessoa, use idades = {'Ana': 30, 'Bruno': 25}. Consulte idades['Ana'] para obter 30. Cada chave é única. Essa estrutura facilita localizar um valor pelo seu nome, sem percorrer uma sequência inteira."
+  },
+  {
+    "id": "conjuntos",
+    "text": "Conjuntos em Python representam coleções de valores únicos, sem uma ordem de posição. Transformar uma lista em set remove elementos duplicados: set([1, 1, 2]) produz {1, 2}. Também permitem calcular união, interseção e diferença entre grupos. Os elementos precisam ser hashable."
+  },
+  {
+    "id": "excecoes",
+    "text": "Tratamento de exceções em Python permite reagir a falhas sem interromper todo o programa. Envolva a operação em try e capture um erro específico com except ValueError, por exemplo ao converter um texto inválido em número. Use finally para liberar recursos. Evite esconder erros com um except genérico vazio."
+  },
+  {
+    "id": "arquivos",
+    "text": "Para ler um arquivo de texto em Python, use with open('notas.txt', encoding='utf-8') as arquivo e conteudo = arquivo.read(). O gerenciador de contexto fecha o recurso automaticamente, inclusive se ocorrer uma exceção. O modo 'w' permite escrever e substitui o conteúdo anterior; 'a' acrescenta ao final."
+  },
+  {
+    "id": "geradores",
+    "text": "Geradores em Python produzem um elemento por vez com yield, em vez de construir uma lista completa na memória. São úteis para processar grandes sequências de dados gradualmente. Um laço for consome os valores sob demanda. Depois de esgotado, o gerador não pode ser percorrido de novo sem criar outra instância."
+  },
+  {
+    "id": "asyncio",
+    "text": "A biblioteca asyncio do Python executa corrotinas usando async def e await. Ela permite alternar tarefas enquanto aguardam operações de entrada e saída, como chamadas HTTP. asyncio.gather aguarda várias corrotinas concorrentemente. Isso reduz espera em tarefas de rede; não acelera automaticamente cálculos intensivos de CPU."
+  },
+  {
+    "id": "funcoes",
+    "text": "Funções em Python agrupam instruções reutilizáveis. Declare def somar(a, b): e retorne a + b com return. Parâmetros recebem os dados da chamada, e o retorno entrega o resultado a quem chamou. Separar uma operação em função evita repetir lógica e facilita testar cada comportamento isoladamente."
+  }
+]

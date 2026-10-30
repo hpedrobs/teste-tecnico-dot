@@ -1,0 +1,739 @@
+{
+  "info": {
+    "_postman_id": "7aa23856-bbbf-4eec-9c69-5f0056993101",
+    "name": "DOT - Questão 1 - API de biblioteca",
+    "description": "Cadastro e consulta de livros com Django REST Framework e SQLite.\n\nInicie a API com `python manage.py migrate` e `python manage.py runserver`. A variável da coleção `base_url` vale `http://127.0.0.1:8000`, sem barra final. Não há autenticação nem uso de OpenAI/LangSmith nestas requisições.\n\nExecute primeiro o cadastro válido para ter um livro que corresponda aos filtros. Cada envio desse POST cria outro registro; títulos repetidos são permitidos. Os exemplos salvos foram capturados em um banco temporário, com um livro; seus IDs e resultados reais dependem do banco local.\n\nOs filtros são parciais, literais e sem diferenciação de caixa, inclusive letras acentuadas. Acentos continuam significativos. Título e autor juntos usam E. Filtros vazios são ignorados. Sem resultados: HTTP 200 e [].\n\nGuia e contrato dos endpoints: docs/api.md no projeto.",
+    "schema": "https://schema.postman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string",
+      "description": "Endereço da API sem barra final. Altere a porta aqui se necessário."
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Cadastro",
+      "item": [
+        {
+          "name": "Cadastrar livro - 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ]
+            },
+            "description": "Cria um livro com os quatro campos obrigatórios. Retorna HTTP 201 com id gerado. Execute antes dos exemplos de filtros. Repetir este POST cadastra outro livro.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Python Fluente\",\n  \"autor\": \"Luciano Ramalho\",\n  \"data_publicacao\": \"2022-05-10\",\n  \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ]
+                },
+                "description": "Cria um livro com os quatro campos obrigatórios. Retorna HTTP 201 com id gerado. Execute antes dos exemplos de filtros. Repetir este POST cadastra outro livro.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Python Fluente\",\n  \"autor\": \"Luciano Ramalho\",\n  \"data_publicacao\": \"2022-05-10\",\n  \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"titulo\": \"Python Fluente\",\n  \"autor\": \"Luciano Ramalho\",\n  \"data_publicacao\": \"2022-05-10\",\n  \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2 - Consultas",
+      "item": [
+        {
+          "name": "Listar livros - 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ]
+            },
+            "description": "Lista todos os livros por id crescente. Corpo: array JSON, sem paginação."
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ]
+                },
+                "description": "Lista todos os livros por id crescente. Corpo: array JSON, sem paginação."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"titulo\": \"Python Fluente\",\n    \"autor\": \"Luciano Ramalho\",\n    \"data_publicacao\": \"2022-05-10\",\n    \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Filtrar por título - 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/?titulo=PYTHON",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": "PYTHON"
+                }
+              ]
+            },
+            "description": "Busca parcial: PYTHON encontra Python Fluente, ignorando caixa."
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/?titulo=PYTHON",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "titulo",
+                      "value": "PYTHON"
+                    }
+                  ]
+                },
+                "description": "Busca parcial: PYTHON encontra Python Fluente, ignorando caixa."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"titulo\": \"Python Fluente\",\n    \"autor\": \"Luciano Ramalho\",\n    \"data_publicacao\": \"2022-05-10\",\n    \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Filtrar por autor - 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/?autor=ramalho",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "autor",
+                  "value": "ramalho"
+                }
+              ]
+            },
+            "description": "Busca parcial: ramalho encontra Luciano Ramalho."
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/?autor=ramalho",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "autor",
+                      "value": "ramalho"
+                    }
+                  ]
+                },
+                "description": "Busca parcial: ramalho encontra Luciano Ramalho."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"titulo\": \"Python Fluente\",\n    \"autor\": \"Luciano Ramalho\",\n    \"data_publicacao\": \"2022-05-10\",\n    \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Combinar título e autor - 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/?titulo=python&autor=ramalho",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": "python"
+                },
+                {
+                  "key": "autor",
+                  "value": "ramalho"
+                }
+              ]
+            },
+            "description": "Os dois filtros usam E: o livro precisa atender aos dois critérios."
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/?titulo=python&autor=ramalho",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "titulo",
+                      "value": "python"
+                    },
+                    {
+                      "key": "autor",
+                      "value": "ramalho"
+                    }
+                  ]
+                },
+                "description": "Os dois filtros usam E: o livro precisa atender aos dois critérios."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"titulo\": \"Python Fluente\",\n    \"autor\": \"Luciano Ramalho\",\n    \"data_publicacao\": \"2022-05-10\",\n    \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Ignorar filtros vazios - 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/?titulo=&autor=",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": ""
+                },
+                {
+                  "key": "autor",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Valores vazios são ignorados, portanto lista todos os livros."
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/?titulo=&autor=",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "titulo",
+                      "value": ""
+                    },
+                    {
+                      "key": "autor",
+                      "value": ""
+                    }
+                  ]
+                },
+                "description": "Valores vazios são ignorados, portanto lista todos os livros."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"titulo\": \"Python Fluente\",\n    \"autor\": \"Luciano Ramalho\",\n    \"data_publicacao\": \"2022-05-10\",\n    \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Consulta sem resultados - 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/?titulo=__dot_sem_correspondencia__",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": "__dot_sem_correspondencia__"
+                }
+              ]
+            },
+            "description": "Retorna [] se não houver título contendo o texto informado. Esse marcador não aparece nos livros de exemplo; caso seu banco tenha um título assim, altere o filtro."
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/?titulo=__dot_sem_correspondencia__",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "titulo",
+                      "value": "__dot_sem_correspondencia__"
+                    }
+                  ]
+                },
+                "description": "Retorna [] se não houver título contendo o texto informado. Esse marcador não aparece nos livros de exemplo; caso seu banco tenha um título assim, altere o filtro."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3 - Validações",
+      "item": [
+        {
+          "name": "Campos obrigatórios ausentes - 400",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ]
+            },
+            "description": "Envia {}. Deve retornar HTTP 400 com mensagens para titulo, autor, data_publicacao e resumo.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ]
+                },
+                "description": "Envia {}. Deve retornar HTTP 400 com mensagens para titulo, autor, data_publicacao e resumo.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"titulo\": [\n    \"Este campo é obrigatório.\"\n  ],\n  \"autor\": [\n    \"Este campo é obrigatório.\"\n  ],\n  \"data_publicacao\": [\n    \"Este campo é obrigatório.\"\n  ],\n  \"resumo\": [\n    \"Este campo é obrigatório.\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Data impossível - 400",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/livros/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "livros",
+                ""
+              ]
+            },
+            "description": "2023 não é bissexto. Deve retornar HTTP 400 com mensagem em data_publicacao; nenhum livro é criado.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Python Fluente\",\n  \"autor\": \"Luciano Ramalho\",\n  \"data_publicacao\": \"2023-02-29\",\n  \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Exemplo capturado em banco isolado - 400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/livros/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "livros",
+                    ""
+                  ]
+                },
+                "description": "2023 não é bissexto. Deve retornar HTTP 400 com mensagem em data_publicacao; nenhum livro é criado.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Python Fluente\",\n  \"autor\": \"Luciano Ramalho\",\n  \"data_publicacao\": \"2023-02-29\",\n  \"resumo\": \"Uma introdução à programação idiomática em Python.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data_publicacao\": [\n    \"Formato inválido para data. Use um dos formatos a seguir: YYYY-MM-DD.\"\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
